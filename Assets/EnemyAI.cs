@@ -36,4 +36,16 @@ public class EnemyAI : MonoBehaviour
             Debug.Log("Chase");
         }
     }
+    private void Chase()
+    {
+
+    }
+    private void Patrol()
+    {
+
+    }
+    private void Attack()
+    {
+
+    }
 }
