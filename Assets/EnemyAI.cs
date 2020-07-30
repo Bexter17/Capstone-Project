@@ -12,6 +12,7 @@ public class EnemyAI : MonoBehaviour
 
     // The distance the enemy will begin to chase player
     public float chaseRange;
+    public float attackRange;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +25,10 @@ public class EnemyAI : MonoBehaviour
         {
             chaseRange = 5f;
         }
+        if(attackRange <= 0)
+        {
+            attackRange = 2;
+        }
     }
 
     // Update is called once per frame
@@ -31,19 +36,27 @@ public class EnemyAI : MonoBehaviour
     {
         // Checks if the distance between enemy and player
         // is less then chaseRange
-        if (Vector3.Distance(target.position, gameObject.transform.position) < chaseRange)
+        if (Vector3.Distance(target.position, gameObject.transform.position) < chaseRange && Vector3.Distance(target.position, gameObject.transform.position) > attackRange)
         {
-            Debug.Log("Chase");
+            Chase();
+
         }
     }
     private void Chase()
     {
-
+        // Rotates to always face the player
+        transform.LookAt(target);
+        // Move forward
+        transform.position += transform.forward * enemyMovement * Time.deltaTime;
     }
-    private void Patrol()
-    {
+    //private void Patrol()
+    //{
+    //    // Generate random number from 0-360
+    //    int randomRotation = Random.Range(0, 361);
 
-    }
+    //    // rotate to random position
+    //    transform.position += transform.forward * enemyMovement * Time.deltaTime;
+    //}
     private void Attack()
     {
 
