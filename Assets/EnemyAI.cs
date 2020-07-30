@@ -30,7 +30,7 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         // Checks if the distance between enemy and player
-        // Is less then chaseRange
+        // is less then chaseRange
         if (Vector3.Distance(target.position, gameObject.transform.position) < chaseRange)
         {
             Debug.Log("Chase");
