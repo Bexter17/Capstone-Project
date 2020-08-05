@@ -634,5 +634,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   enemyMovement: 5
+  rb: {fileID: 0}
   chaseRange: 10
-  attackRange: 0
+  attackRange: 3
+  patrolDuration: 3
+  patrolPause: 1
