@@ -9,15 +9,22 @@ public class EnemyAI : MonoBehaviour
 
     // How fast enemy moves
     public float enemyMovement;
+    public Rigidbody rb;
 
     // The distance the enemy will begin to chase player
     public float chaseRange;
     public float attackRange;
+
+    bool isMoving = true;
+    bool isPatrolling = false;
+    public float patrolDuration = 2f;
+    public float patrolPause = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
         target = GameObject.Find("Player").transform;
-        if(enemyMovement <= 0)
+        rb = GetComponent<Rigidbody>();
+        if (enemyMovement <= 0)
         {
             enemyMovement = 10f;
         }
@@ -27,36 +34,54 @@ public class EnemyAI : MonoBehaviour
         }
         if(attackRange <= 0)
         {
-            attackRange = 2;
+            attackRange = 2f;
+        }
+        if(patrolDuration <= 0)
+        {
+            patrolDuration = 2f;
+        }
+        if(patrolPause < 0)
+        {
+            patrolPause = 0.5f;
         }
         Patrol();
+        //MoveContinuouslyForward();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // Checks if the distance between enemy and player
         // is less then chaseRange
-        //if (Vector3.Distance(target.position, gameObject.transform.position) < chaseRange && Vector3.Distance(target.position, gameObject.transform.position) > attackRange)
-        //{
-        //    Chase();
-        //}
+        if (Vector3.Distance(target.position, gameObject.transform.position) < chaseRange && Vector3.Distance(target.position, gameObject.transform.position) > attackRange)
+        {
+            Chase();
+        }
+        else if(!isPatrolling)
+        {
+            Patrol();
+        }
+        MoveForward();
+
 
     }
     private void MoveForward()
     {
-        transform.position += transform.forward * enemyMovement * Time.deltaTime;
+        if (isMoving)
+        {
+            transform.position += transform.forward * enemyMovement * Time.deltaTime;
+        }
     }
-    private void MoveContinuouslyForward()
-    {
-        rigidbody3D.velocity = new Vector2(playerDirection * transform.localScale.x * moveSpeed, GetComponent<Rigidbody2D>().velocity.y);
-    }
+    //private void MoveContinuouslyForward()
+    //{
+    //    rb.velocity = gameObject.transform.rotation * Vector3.forward * enemyMovement * Time.deltaTime;
+    //}
     private void Chase()
     {
+        isPatrolling = false;
         // Rotates to always face the player
         transform.LookAt(target, Vector3.up);
         // Move forward
-        MoveForward();
     }
     //private void Patrol()
     //{
@@ -72,15 +97,15 @@ public class EnemyAI : MonoBehaviour
     }
     private void Patrol()
     {
+        isPatrolling = true;
+        isMoving = true;
         transform.Rotate(0, 180, 0);
-        MoveForward();
-        Invoke("PatrolSwitch", 3);
+        Invoke("PatrolPause", patrolDuration);
     }
-    private void PatrolSwitch()
+    private void PatrolPause()
     {
-        transform.Rotate(0, 180, 0);
-        MoveForward();
-        Invoke("Patrol", 3);
+        isMoving = false;
+        Invoke("Patrol", patrolPause);
     }
 }
 
