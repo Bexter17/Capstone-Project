@@ -53,9 +53,13 @@ public class EnemyAI : MonoBehaviour
     {
         // Checks if the distance between enemy and player
         // is less then chaseRange
-        if (Vector3.Distance(target.position, gameObject.transform.position) < chaseRange && Vector3.Distance(target.position, gameObject.transform.position) > attackRange)
+        if (Vector3.Distance(target.position, gameObject.transform.position) < chaseRange)
         {
             Chase();
+        }
+        else if (Vector3.Distance(target.position, gameObject.transform.position) > attackRange)
+        {
+            isMoving = false;
         }
         else if(!isPatrolling)
         {
