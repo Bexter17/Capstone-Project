@@ -44,7 +44,7 @@ public class EnemyAI : MonoBehaviour
         {
             patrolDuration = 2f;
         }
-        if(patrolPause < 0)
+        if(patrolPause <= 0)
         {
             patrolPause = 0.5f;
         }
@@ -91,6 +91,7 @@ public class EnemyAI : MonoBehaviour
     }
     private void GoHome()
     {
+        //Debug.Log("GOING HOME");
         transform.LookAt(initialPos, Vector3.up);
     }
     //private void MoveContinuouslyForward()
@@ -99,6 +100,7 @@ public class EnemyAI : MonoBehaviour
     //}
     private void Chase()
     {
+        //Debug.Log("CHASE");
         isPatrolling = false;
         isInitPos = false;
         // Rotates to always face the player
@@ -119,6 +121,7 @@ public class EnemyAI : MonoBehaviour
     }
     private void Patrol()
     {
+        //Debug.Log("PATROL");
         isPatrolling = true;
         isMoving = true;
         transform.Rotate(0, 180, 0);
