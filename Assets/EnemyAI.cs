@@ -6,6 +6,8 @@ public class EnemyAI : MonoBehaviour
 {
     // The player that the enemy will chase
     public Transform target;
+    public Transform initialPos;
+    bool isInitPos = true;
 
     // How fast enemy moves
     public float enemyMovement;
@@ -24,6 +26,8 @@ public class EnemyAI : MonoBehaviour
     {
         target = GameObject.Find("Player").transform;
         rb = GetComponent<Rigidbody>();
+        initialPos = gameObject.transform;
+
         if (enemyMovement <= 0)
         {
             enemyMovement = 10f;
@@ -49,19 +53,28 @@ public class EnemyAI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
+        // Checks if enemy has returned to starting position
+        if (gameObject.transform == initialPos)
+        {
+            isInitPos = true;
+        }
         // Checks if the distance between enemy and player
         // is less then chaseRange
         if (Vector3.Distance(target.position, gameObject.transform.position) < chaseRange)
         {
             Chase();
         }
-        else if (Vector3.Distance(target.position, gameObject.transform.position) > attackRange)
+        else if (Vector3.Distance(target.position, gameObject.transform.position) < attackRange)
         {
             isMoving = false;
         }
-        else if(!isPatrolling)
+        else if (!isInitPos)
+        {
+            GoHome();
+        }
+        else if(!isPatrolling && isInitPos)
         {
             Patrol();
         }
@@ -76,6 +89,10 @@ public class EnemyAI : MonoBehaviour
             transform.position += transform.forward * enemyMovement * Time.deltaTime;
         }
     }
+    private void GoHome()
+    {
+        transform.LookAt(initialPos, Vector3.up);
+    }
     //private void MoveContinuouslyForward()
     //{
     //    rb.velocity = gameObject.transform.rotation * Vector3.forward * enemyMovement * Time.deltaTime;
@@ -83,6 +100,7 @@ public class EnemyAI : MonoBehaviour
     private void Chase()
     {
         isPatrolling = false;
+        isInitPos = false;
         // Rotates to always face the player
         transform.LookAt(target, Vector3.up);
         // Move forward
