@@ -6,7 +6,7 @@ public class EnemyAI : MonoBehaviour
 {
     // The player that the enemy will chase
     public Transform target;
-    public Transform initialPos;
+    public Vector3 initialPos;
     bool isInitPos = true;
 
     // How fast enemy moves
@@ -19,14 +19,15 @@ public class EnemyAI : MonoBehaviour
 
     bool isMoving = true;
     bool isPatrolling = false;
-    public float patrolDuration = 2f;
-    public float patrolPause = 0.5f;
+    public float patrolDuration;
+    public float patrolPause;
+    //float randomRotation;
     // Start is called before the first frame update
     void Start()
     {
         target = GameObject.Find("Player").transform;
         rb = GetComponent<Rigidbody>();
-        initialPos = gameObject.transform;
+        initialPos = gameObject.transform.position;
 
         if (enemyMovement <= 0)
         {
@@ -54,12 +55,13 @@ public class EnemyAI : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {        
         // Checks if enemy has returned to starting position
-        if (gameObject.transform == initialPos)
+        if (Vector3.Distance(initialPos, gameObject.transform.position) < 0.5)
         {
             isInitPos = true;
         }
+
         // Checks if the distance between enemy and player
         // is less then chaseRange
         if (Vector3.Distance(target.position, gameObject.transform.position) < chaseRange)
@@ -119,6 +121,8 @@ public class EnemyAI : MonoBehaviour
     {
 
     }
+    // During Patrol moves one way for patrolDuration then stops for patrolPause
+    // Turns around and continues
     private void Patrol()
     {
         //Debug.Log("PATROL");
@@ -132,6 +136,11 @@ public class EnemyAI : MonoBehaviour
         isMoving = false;
         Invoke("Patrol", patrolPause);
     }
+    //private void RandNum()
+    //{
+    //    // Generate random number from 0-360
+    //    randomRotation = Random.Range(0, 361);
+    //}
 }
 
         //Go in circles
