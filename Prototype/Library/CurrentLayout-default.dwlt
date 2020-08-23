@@ -19,9 +19,9 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Project
   m_RootView: {fileID: 6}
-  m_MinSize: {x: 875, y: 492}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 442}
   m_MaxSize: {x: 4002, y: 8042}
   vertical: 1
-  controlID: 41
+  controlID: 99
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -149,7 +149,7 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 997
-  m_MinSize: {x: 875, y: 492}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
   m_TopViewHeight: 30
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_MinSize: {x: 911, y: 442}
   m_MaxSize: {x: 22006, y: 10021}
   vertical: 0
-  controlID: 40
+  controlID: 98
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -504,9 +504,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: aa380000
-      m_LastClickedID: 14506
-      m_ExpandedIDs: 62faffff84faffff9efaffff62fbffff70380000
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 74faffff92faffff56fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -605,8 +605,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 0
     m_SearchArea: 1
-    m_Folders:
-    - Assets/Scenes/MainScene
+    m_Folders: []
     m_Globs: []
   m_ViewMode: 0
   m_StartGridSize: 64
@@ -619,7 +618,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 40a60000
     m_LastClickedID: 42560
-    m_ExpandedIDs: 00000000643700006637000068370000
+    m_ExpandedIDs: 000000004e370000503700005237000054370000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -647,7 +646,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff0000000064370000663700006837000088370000
+    m_ExpandedIDs: ffffffff000000004e37000050370000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: MainMenu
@@ -658,7 +657,7 @@ MonoBehaviour:
         y: 0
         width: 0
         height: 0
-      m_UserData: 14236
+      m_UserData: 14194
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
@@ -828,9 +827,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 5.7705164, y: 33.204834, z: -69.001305}
+    m_Target: {x: 4.1748023, y: 2.1939957, z: -47.467556}
     speed: 2
-    m_Value: {x: 5.7705164, y: 33.204834, z: -69.001305}
+    m_Value: {x: 4.1748023, y: 2.1939957, z: -47.467556}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -877,9 +876,9 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.35399845, y: -0.11543177, z: 0.04411036, w: -0.9269408}
+    m_Target: {x: -0.28124884, y: -0.32082915, z: 0.10045413, w: -0.8987094}
     speed: 2
-    m_Value: {x: -0.35409886, y: -0.114052385, z: 0.043583576, w: -0.92720366}
+    m_Value: {x: -0.28112566, y: -0.32220876, z: 0.10088588, w: -0.89831614}
   m_Size:
     m_Target: 10
     speed: 2
