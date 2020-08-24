@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -21,13 +22,18 @@ public class EnemyAI : MonoBehaviour
     bool isPatrolling = false;
     public float patrolDuration;
     public float patrolPause;
+
+    NavMeshAgent agent;
+    Vector3 patrolPos1;
+    Vector3 patrolPos2;
     //float randomRotation;
     // Start is called before the first frame update
     void Start()
     {
         target = GameObject.Find("Player").transform;
         rb = GetComponent<Rigidbody>();
-        initialPos = gameObject.transform.position;
+        agent = GetComponent<NavMeshAgent>();
+        initialPos = agent.transform.position;
 
         if (enemyMovement <= 0)
         {
@@ -51,6 +57,8 @@ public class EnemyAI : MonoBehaviour
         }
         Patrol();
         //MoveContinuouslyForward();
+        patrolPos1 = new Vector3(initialPos.x, initialPos.y, initialPos.z + 5);
+        patrolPos2 = new Vector3(initialPos.x, initialPos.y, initialPos.z - 5);
     }
 
     // Update is called once per frame
@@ -80,21 +88,22 @@ public class EnemyAI : MonoBehaviour
         {
             Patrol();
         }
-        MoveForward();
+        //MoveForward();
 
 
     }
-    private void MoveForward()
-    {
-        if (isMoving)
-        {
-            transform.position += transform.forward * enemyMovement * Time.deltaTime;
-        }
-    }
+    //private void MoveForward()
+    //{
+    //    if (isMoving)
+    //    {
+    //        transform.position += transform.forward * enemyMovement * Time.deltaTime;
+    //    }
+    //}
     private void GoHome()
     {
-        //Debug.Log("GOING HOME");
-        transform.LookAt(initialPos, Vector3.up);
+        Debug.Log("GOING HOME");
+        //transform.LookAt(initialPos, Vector3.up);
+        agent.SetDestination(initialPos);
     }
     //private void MoveContinuouslyForward()
     //{
@@ -102,11 +111,13 @@ public class EnemyAI : MonoBehaviour
     //}
     private void Chase()
     {
-        //Debug.Log("CHASE");
+        Debug.Log("CHASE");
         isPatrolling = false;
         isInitPos = false;
         // Rotates to always face the player
-        transform.LookAt(target, Vector3.up);
+        //transform.LookAt(target, Vector3.up);
+        // Sets player as destination
+        agent.SetDestination(target.transform.position);
         // Move forward
     }
     //private void Patrol()
@@ -125,17 +136,35 @@ public class EnemyAI : MonoBehaviour
     // Turns around and continues
     private void Patrol()
     {
-        //Debug.Log("PATROL");
-        isPatrolling = true;
+        Debug.Log("PATROL");
+        //At the begin of patrolling sets first patrol destination
+        if (!isPatrolling)
+        {
+            agent.SetDestination(patrolPos1);
+            isPatrolling = true;
+        }
         isMoving = true;
-        transform.Rotate(0, 180, 0);
-        Invoke("PatrolPause", patrolDuration);
+        //transform.Rotate(0, 180, 0);
+        //Invoke("PatrolPause", patrolDuration);
+        // If agent is close to finish it will switch destination
+        if (agent.remainingDistance < 1)
+        {
+            if (agent.destination != patrolPos1)
+            {
+                agent.SetDestination(patrolPos1);
+            }else if(agent.destination != patrolPos2)
+            {
+                agent.SetDestination(patrolPos2);
+            }
+        }
+
+
     }
-    private void PatrolPause()
-    {
-        isMoving = false;
-        Invoke("Patrol", patrolPause);
-    }
+    //private void PatrolPause()
+    //{
+    //    isMoving = false;
+    //    Invoke("Patrol", patrolPause);
+    //}
     //private void RandNum()
     //{
     //    // Generate random number from 0-360
