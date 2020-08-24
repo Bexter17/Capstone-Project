@@ -24,8 +24,9 @@ public class EnemyAI : MonoBehaviour
     public float patrolPause;
 
     NavMeshAgent agent;
-    Vector3 patrolPos1;
-    Vector3 patrolPos2;
+
+    public Transform waypoint1;
+    public Transform waypoint2;
     //float randomRotation;
     // Start is called before the first frame update
     void Start()
@@ -57,8 +58,6 @@ public class EnemyAI : MonoBehaviour
         }
         Patrol();
         //MoveContinuouslyForward();
-        patrolPos1 = new Vector3(initialPos.x, initialPos.y, initialPos.z + 5);
-        patrolPos2 = new Vector3(initialPos.x, initialPos.y, initialPos.z - 5);
     }
 
     // Update is called once per frame
@@ -70,21 +69,22 @@ public class EnemyAI : MonoBehaviour
             isInitPos = true;
         }
 
+        if (Vector3.Distance(target.position, gameObject.transform.position) < attackRange)
+        {
+            agent.ResetPath();
+        }
         // Checks if the distance between enemy and player
         // is less then chaseRange
-        if (Vector3.Distance(target.position, gameObject.transform.position) < chaseRange)
+        else if (Vector3.Distance(target.position, gameObject.transform.position) < chaseRange)
         {
             Chase();
         }
-        else if (Vector3.Distance(target.position, gameObject.transform.position) < attackRange)
-        {
-            isMoving = false;
-        }
-        else if (!isInitPos)
-        {
-            GoHome();
-        }
-        else if (!isPatrolling && isInitPos)
+
+        //else if (!isInitPos)
+        //{
+        //    GoHome();
+        //}
+        else if (!isPatrolling /*&& isInitPos*/)
         {
             Patrol();
         }
@@ -140,7 +140,7 @@ public class EnemyAI : MonoBehaviour
         //At the begin of patrolling sets first patrol destination
         if (!isPatrolling)
         {
-            agent.SetDestination(patrolPos1);
+            agent.SetDestination(waypoint1.position);
             isPatrolling = true;
         }
         isMoving = true;
@@ -149,16 +149,32 @@ public class EnemyAI : MonoBehaviour
         // If agent is close to finish it will switch destination
         if (agent.remainingDistance < 1)
         {
-            if (agent.destination != patrolPos1)
-            {
-                agent.SetDestination(patrolPos1);
-            }else if(agent.destination != patrolPos2)
-            {
-                agent.SetDestination(patrolPos2);
-            }
+            //if (agent.destination != waypoint1.position)
+            //{
+            //    agent.SetDestination(waypoint1.position);
+            //}else if(agent.destination != waypoint2.position)
+            //{
+            //    agent.SetDestination(waypoint2.position);
+            //}
         }
 
 
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isPatrolling)
+        {
+
+            if (other.CompareTag("WayPoint1"))
+            {
+                Debug.Log("Waypoint");
+                agent.SetDestination(waypoint2.position);
+            }
+            else if (other.CompareTag("WayPoint2"))
+            {
+                agent.SetDestination(waypoint1.position);
+            }
+        }
     }
     //private void PatrolPause()
     //{
