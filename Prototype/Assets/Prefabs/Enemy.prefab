@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6844810565142239590}
   - component: {fileID: 6844810565142239591}
   - component: {fileID: 6844810565142239576}
-  - component: {fileID: 8979631289657058158}
+  - component: {fileID: 1643934495}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -135,7 +135,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!195 &8979631289657058158
+--- !u!195 &1643934495
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
