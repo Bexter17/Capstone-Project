@@ -108,13 +108,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6844810565142239577}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afe85f12322059c49b072c2cb437cfdf, type: 3}
+  m_Script: {fileID: 11500000, guid: b042f7faa3637f54793de9ee2171116f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   initialPos: {x: 0, y: 0, z: 0}
   enemyMovement: 0
-  rb: {fileID: 6844810565142239576}
+  rb: {fileID: 0}
   chaseRange: 0
   attackRange: 0
   patrolDuration: 0
