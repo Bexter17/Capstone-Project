@@ -13,8 +13,12 @@ public class Character_Mechanics : MonoBehaviour
     //Creates a charactercontoller variable named "controller"
     CharacterController controller;
 
-    //Tracks player health
-    int Health = 5;
+    //Tracks player health (VARANT NOTES: changed Health to maxHealth and currentHealth to make it work with HealthBar script)
+    public HealthBar healthBar;
+
+    public int maxHealth = 20;
+    public int currentHealth;
+
 
     //Tracks player's lives
     int Lives = 3;
@@ -85,6 +89,8 @@ public class Character_Mechanics : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
         try
         {
             //Accesses the CharacterController component on the character object 
@@ -139,7 +145,7 @@ public class Character_Mechanics : MonoBehaviour
         if (isAlive)
         {
             //If health drops to or below zero, the player dies
-            if (Health <= 0)
+            if (currentHealth <= 0)
             {
                 animator.SetTrigger("Die");
                 isAlive = false;
@@ -271,10 +277,7 @@ public class Character_Mechanics : MonoBehaviour
                 animator.SetBool("Crouching", isCrouched);
             }
 
-            if (Input.GetButtonDown("Kill Player"))
-            {
-                Health = 0;
-            }
+       
         }
     }
     //Triggers at the end of an animation to turn bool off
@@ -302,7 +305,8 @@ public class Character_Mechanics : MonoBehaviour
 
         if (gameObject.tag == "Enemy")
         {
-            Health--;
+            //currentHealth--;
+            TakeDamage(1);
             animator.SetTrigger("Got Hit");
             Debug.Log("PLayer Hit by Enemy");
         }
@@ -310,7 +314,8 @@ public class Character_Mechanics : MonoBehaviour
         if (gameObject.tag == "Projectile")
         {
             Debug.Log("Player Hit by projectile");
-            Health--;
+            //currentHealth--;
+            TakeDamage(1);
             animator.SetTrigger("Got Hit");
         }
     }
@@ -354,6 +359,13 @@ public class Character_Mechanics : MonoBehaviour
             //Destroy(a.gameObject);
             //a.gameObject.Health -= 1;
         }
+    }
+
+    void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        healthBar.SetHealth(currentHealth);
     }
 
     //Trigger after death animation to fully kill player object
