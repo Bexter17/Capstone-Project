@@ -9,6 +9,7 @@ TagManager:
   - ExtraSpeed
   - WayPoint1
   - WayPoint2
+  - Floor
   layers:
   - Default
   - TransparentFX
